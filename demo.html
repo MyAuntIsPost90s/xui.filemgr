@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <meta charset="utf-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>filemgr-demo</title>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="xui.filemgr/xui.fileMgr.css" />
+    <script src="jquery-2.2.4.min.js"></script>
+    <script src="layui/layui.all.js"></script>
+    <script language="javascript" src="xui.filemgr/webuploader.js" ></script>
+    <script src="xui.filemgr/xui.fileMgr.js"></script>
+</head>
+
+<body>
+    <button onclick="testClick()">开始</button>
+    <script>
+        $(function () {
+            $.ajaxSetup({
+                aysnc: true, // 默认异步加载
+                type: "POST", // 默认使用POST方式
+                dataType: 'JSON',
+                headers: { // 默认添加请求头
+                    "AppKey": "02619EF1A99F54F199590E871ED8B9C2",
+                    "AccessToken": "F22A329B54B856A53DF9894E39409A05",    //管理员
+                    //"AccessToken": "AD5BC72D3ABFB65DD0DCB94CADFF0A96"    //学生
+                }
+            });
+        })
+        //FileMgr使用示例
+        // *表示必传
+        var filemgr = new AttachMgr({
+            //bId: AttachMgrUtil.getBId(),
+            bId: 1,	//业务id,这个由调用者定义(可以直接调用AttachMgrUtil.getBId()获取)*
+            baseUrl: '/classbrand/video',	//基本路径(一般写个文件夹名称就可以)*
+            fileType: 1, 	//文件类型1其他 2图片 3音频 4视频
+            fileTag: null,	//文件标签，对该文件做某些标记
+            fileCount:2,	//限制上传文件数量
+            fileSize: 1024*1024*1024*2,	//限制上传文件大小,单位bit
+            totalFileSize: 1024*1024*1024*2, //限制总文件上传大小
+            chunkSize:3,    //设置分片大小，默认5M,单位M
+            showType:2,     //展示窗体类型(默认为12):  1仅上传,2上传以及上传完成;
+            title:'测试标题',   //弹出框标题
+            tip:'我是提示',
+            onTotalFileSizeOver:function(file){
+                console.log(file);
+            }
+        });
+
+        function testClick() {
+            filemgr.show();		//展示上传框
+        }
+    </script>
+</body>
+
+</html>
